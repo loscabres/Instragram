@@ -7,6 +7,8 @@
 //
 
 import UIKit
+import Parse
+import Bolts
 
 @UIApplicationMain
 class AppDelegate: UIResponder, UIApplicationDelegate {
@@ -16,6 +18,24 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
 
     func application(application: UIApplication, didFinishLaunchingWithOptions launchOptions: [NSObject: AnyObject]?) -> Bool {
         // Override point for customization after application launch.
+        
+        Parse.enableLocalDatastore()
+        
+        Parse.setApplicationId("scomzSluslwPjj8fYLFS2X3hfjDwig03iEs1qlnU",
+            clientKey: "Uq3s3m3NcZ7jUbN8OJCoAQ8v78GQGgfsbAigbTlE")
+        
+        PFAnalytics.trackAppOpenedWithLaunchOptions(launchOptions)
+        
+//        let testObject=PFObject(className: "TestObject")
+//        testObject["foo"]="bar"
+//        testObject.saveInBackgroundWithBlock{(success:Bool,error:NSError?)-> Void in
+//            print("Object has been saved.")
+//        }
+//        
+        
+        //call login function
+        login()
+        
         return true
     }
 
@@ -41,6 +61,19 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         // Called when the application is about to terminate. Save data if appropriate. See also applicationDidEnterBackground:.
     }
 
+    func login(){
+        //remember use's login
+        
+        let username:String?=NSUserDefaults.standardUserDefaults().stringForKey("username")
+        
+        //if loged in
+        
+        if username != nil{
+            let storyboard:UIStoryboard=UIStoryboard(name: "Main", bundle: nil)
+            let myTabBar=storyboard.instantiateViewControllerWithIdentifier("tabBar") as! UITabBarController
+            window?.rootViewController=myTabBar
+        }
+    }
 
 }
 
